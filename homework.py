@@ -12,7 +12,7 @@ def df(x) :
     return 4*math.pow(x,3) - 6 * math.pow(x,2)
 
 def g(x):
-    return None
+    return math.pow((2*(x**3) +10), 1/4)
 
 def bisection(a,b):
     ya = f(a)
@@ -119,19 +119,27 @@ def Secant(x0, x1):
 
     return(pd.DataFrame({"Approximations" : approx, "Errors" : err}))
 
-# def FixedPoint(x0):
+def FixedPoint(x0):
 
-#     approx = []
-#     err  =[]
+    if f(x0) == 0 :
+        return (f"The root of this equation is : {x0}")
 
-#     while error > tolerance :
-#         x = g(x0)
-#         error = abs(x - x0)
-#         approx.append(x)
-#         err.append(error)
-#         x = x0
+    error = 1000
+    approx = []
+    err  = []
+
+    while error > tolerance :
+        x = g(x0)
+        error = abs(x - x0)
+        approx.append(x)
+        err.append(error)
+        x0 = x
+
+    return (pd.DataFrame({"Approximations" : approx, "Errors" : err}
+    ))
 
 # print(bisection(1,3))
 # print(FalsePositive(1,3))
 # print(Newton(1))
-print(Secant(1,3))
+# print(Secant(1,3))
+print(FixedPoint(1))
