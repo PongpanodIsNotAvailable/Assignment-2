@@ -80,6 +80,41 @@ def FalsePositive(a,b):
         return(f"The root of this equation is b : {b}")
     else :
         return (f"The is no root of this equation between the interval {a} -> {b}")
-        
+
+def Newton(x):
+
+    if f(x) == 0 :
+        return (f"The root of this equation is : {x}")
+
+    error = abs(x)
+    prevX = x
+
+    approx = [x]
+    err = [error]
+
+    while error > tolerance:
+        x = x - (f(x)/df(x))
+
+        error = abs(prevX - x)
+        approx.append(x)
+        err.append(error)
+        prevX = x
+    
+    return(pd.DataFrame({"Approximations" : approx, "Errors" : err}))
+
+# def Secant(x0, x1):
+ 
+#     error = abs(x1 - x0)
+#     approx = [x1]
+#     err = [error]
+#     while error > tolerance:
+#         m = (f(x1) - f(x0))/ (x1 - x0)
+#         a = x0
+#         x0 = x1
+#         x1 = a - f(a)/m
+
+#     return(pd.DataFrame({"Approximations" : approx, "Errors" : err}))
+
 # print(bisection(1,3))
 # print(FalsePositive(1,3))
+print(Newton(1))
