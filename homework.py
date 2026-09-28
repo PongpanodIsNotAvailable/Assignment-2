@@ -20,13 +20,14 @@ def bisection(a,b):
     approx = []
     err = []
     error = 100
-    if ya < 0 and yb > 0 :
+    if ya * yb < 0 :
         while error > tolerance:
             c = (a + b)/2
             yc = f(c)
             if yc == 0 :
-                a = c
-                b = c
+                approx.append(c)
+                err.append(0)
+                break
             elif yc < 0 :
                 a = c
             elif yc > 0 :
@@ -39,11 +40,46 @@ def bisection(a,b):
         return(pd.DataFrame({ "Approximations" : approx, "Errors" : err}))
     elif ya == 0 :
         return(f"The root of this equation is a : {a}")
-    else :
+    elif yb == 0 :
         return(f"The root of this equation is b : {b}")
+    else :
+        return (f"The is no root of this equation between the interval {a} -> {b}")
         
 def FalsePositive(a,b):
-    return None
-
-
-print(bisection(1,3))
+    ya = f(a)
+    yb = f(b)
+    approx = []
+    err = []
+    error = 100
+    prevC  = None
+    if ya * yb < 0 :
+        while error > tolerance:
+            c = (a * yb - b * ya)/ (yb - ya)
+            yc = f(c)
+            if yc == 0 :
+                approx.append(c)
+                err.append(0)
+                break
+            elif ya * yc < 0 :
+                b = c
+                yb = yc
+            else :
+                a = c
+                ya = yc
+            if prevC is None:
+                error = abs(c)
+            else :
+                error = abs(prevC - c)            
+            approx.append(c)
+            err.append(error)
+            prevC = c
+        return(pd.DataFrame({ "Approximations" : approx, "Errors" : err}))
+    elif ya == 0 :
+        return(f"The root of this equation is a : {a}")
+    elif yb == 0 :
+        return(f"The root of this equation is b : {b}")
+    else :
+        return (f"The is no root of this equation between the interval {a} -> {b}")
+        
+# print(bisection(1,3))
+# print(FalsePositive(1,3))
