@@ -102,19 +102,36 @@ def Newton(x):
     
     return(pd.DataFrame({"Approximations" : approx, "Errors" : err}))
 
-# def Secant(x0, x1):
+def Secant(x0, x1):
  
-#     error = abs(x1 - x0)
-#     approx = [x1]
-#     err = [error]
-#     while error > tolerance:
-#         m = (f(x1) - f(x0))/ (x1 - x0)
-#         a = x0
-#         x0 = x1
-#         x1 = a - f(a)/m
+    approx = []
+    err = []
+    error = abs(x1 - x0)
+    while error > tolerance:
+        m = (f(x1) - f(x0))/ (x1 - x0)
+        a = x0
+        x0 = x1
+        x1 = a - f(a)/m
 
-#     return(pd.DataFrame({"Approximations" : approx, "Errors" : err}))
+        error = abs(x1 - x0)
+        approx.append(x1)
+        err.append(error)
+
+    return(pd.DataFrame({"Approximations" : approx, "Errors" : err}))
+
+# def FixedPoint(x0):
+
+#     approx = []
+#     err  =[]
+
+#     while error > tolerance :
+#         x = g(x0)
+#         error = abs(x - x0)
+#         approx.append(x)
+#         err.append(error)
+#         x = x0
 
 # print(bisection(1,3))
 # print(FalsePositive(1,3))
-print(Newton(1))
+# print(Newton(1))
+print(Secant(1,3))
